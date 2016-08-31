@@ -13,15 +13,10 @@
 //limitations under the License.
 package com.pte.liquid.relay;
 
-import java.util.Properties;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 import org.apache.camel.Exchange;
-
-import com.pte.liquid.relay.camel.converter.LiquidRelayExchangeConverterImpl;
-import com.pte.liquid.relay.client.stomp.StompTransport;
-import com.pte.liquid.relay.marshaller.json.JsonMarshaller;
 
 public class LiquidRelayBean{
 	private static Logger logger = Logger.getLogger("LiquidRelayBean");
@@ -30,9 +25,9 @@ public class LiquidRelayBean{
 	private Converter<Exchange> converter;
 	private Marshaller marshaller;
 
-
 	private static final int QUEUE_SIZE = 10000;
 	private static final int THRESHOLD_SIZE = 500;
+	
 	private final LinkedBlockingQueue<Exchange> queue = new LinkedBlockingQueue<Exchange>(QUEUE_SIZE);
 		
     private boolean enabled;
@@ -49,24 +44,24 @@ public class LiquidRelayBean{
     protected LiquidRelayBean(boolean enabled, String destination, String hostname, int port){    	
     	this.enabled = enabled;
     	
-    	marshaller = new JsonMarshaller();
-    	
-    	 Properties properties = new Properties();
-    	
-        if(destination!=null){
-        	properties.put("relay_destination", destination);
-        }
-        if(hostname!=null){
-        	properties.put("relay_stomp_hostname", hostname);
-        }
-        if(port>0){
-        	properties.put("relay_stomp_port", port);
-        }
-    	
-    	transport = new StompTransport();
-    	transport.setProperties(properties);
-    	transport.setMarshaller(marshaller);
-    	converter = new LiquidRelayExchangeConverterImpl();
+//    	marshaller = new JsonMarshaller();
+//    	
+//    	 Properties properties = new Properties();
+//    	
+//        if(destination!=null){
+//        	properties.put("relay_destination", destination);
+//        }
+//        if(hostname!=null){
+//        	properties.put("relay_stomp_hostname", hostname);
+//        }
+//        if(port>0){
+//        	properties.put("relay_stomp_port", port);
+//        }
+//    	
+//    	transport = new StompTransport();
+//    	transport.setProperties(properties);
+//    	transport.setMarshaller(marshaller);
+//    	converter = new LiquidRelayExchangeConverterImpl();
     	
     }
     
