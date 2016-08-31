@@ -11,7 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-package com.pte.liquid.relay.camel.processor;
+package com.pte.liquid.relay;
 
 import java.util.Properties;
 
@@ -20,9 +20,6 @@ import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pte.liquid.relay.Converter;
-import com.pte.liquid.relay.Marshaller;
-import com.pte.liquid.relay.Transport;
 import com.pte.liquid.relay.camel.converter.LiquidRelayExchangeConverterImpl;
 import com.pte.liquid.relay.camel.util.LiquidRelayCamelUtil;
 import com.pte.liquid.relay.client.stomp.StompTransport;
@@ -41,7 +38,7 @@ public class LiquidRelayProcessor implements Processor{
 
     private static LiquidRelayProcessor liquidRelayProcessor = null;
     
-    public synchronized static LiquidRelayProcessor getInstance(boolean enabled, String destination, String hostname, int port) {
+    public static LiquidRelayProcessor getInstance(boolean enabled, String destination, String hostname, int port) {
     	   if(liquidRelayProcessor == null) {
     		   liquidRelayProcessor = new LiquidRelayProcessor(enabled, destination, hostname, port);
     	   }

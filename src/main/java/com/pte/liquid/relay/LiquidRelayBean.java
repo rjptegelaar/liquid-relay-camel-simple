@@ -11,15 +11,12 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-package com.pte.liquid.relay.camel.bean;
+package com.pte.liquid.relay;
 
 import java.util.Properties;
 
 import org.apache.camel.Exchange;
 
-import com.pte.liquid.relay.Converter;
-import com.pte.liquid.relay.Marshaller;
-import com.pte.liquid.relay.Transport;
 import com.pte.liquid.relay.camel.converter.LiquidRelayExchangeConverterImpl;
 import com.pte.liquid.relay.camel.util.LiquidRelayCamelUtil;
 import com.pte.liquid.relay.client.stomp.StompTransport;
@@ -36,13 +33,13 @@ public class LiquidRelayBean{
     private boolean enabled;
 
     private static LiquidRelayBean liquidRelayBean = null;
-    
-    public synchronized static LiquidRelayBean getInstance(boolean enabled, String destination, String hostname, int port) {
+        
+    public static LiquidRelayBean getInstance(boolean enabled, String destination, String hostname, int port) {
     	   if(liquidRelayBean == null) {
     		   liquidRelayBean = new LiquidRelayBean(enabled, destination, hostname, port);
     	   }
     	   return liquidRelayBean;
-    	}
+    }
 	
     protected LiquidRelayBean(boolean enabled, String destination, String hostname, int port){    	
     	this.enabled = enabled;
@@ -69,7 +66,10 @@ public class LiquidRelayBean{
     }
     
 	public void process(Exchange exchange) throws Exception {
-		try{
+		try{				
+			
+			
+			
     		if(enabled){
     			    		
 	        	Message preMsg = converter.convert(exchange);  
