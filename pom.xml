@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>liquid-relay-camel-simple</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.0.5</version>
   <name>liquid-relay-camel-simple</name>
 <url>http://www.paultegelaar.nl</url>
 	<parent>
@@ -13,7 +13,7 @@
 		<connection>scm:git:https://github.com/rjptegelaar/liquid-relay-camel-simple</connection>
 		<developerConnection>scm:git:git@github.com:rjptegelaar/liquid-relay-camel-simple</developerConnection>
 		<url>https://github.com/rjptegelaar/liquid-relay-camel-simple.git</url>
-		<tag>HEAD</tag>
+		<tag>liquid-relay-camel-simple-0.0.5</tag>
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
