@@ -26,45 +26,33 @@ public class LiquidRelayBean{
 	
 	private final LinkedBlockingQueue<Exchange> queue = new LinkedBlockingQueue<Exchange>(QUEUE_SIZE);
 		
-    private boolean enabled;
 
     private static LiquidRelayBean liquidRelayBean = null;
         
-    public static LiquidRelayBean getInstance(boolean enabled) {
+    public static LiquidRelayBean getInstance() {
     	   if(liquidRelayBean == null) {
-    		   liquidRelayBean = new LiquidRelayBean(enabled);
+    		   liquidRelayBean = new LiquidRelayBean();
     	   }
     	   return liquidRelayBean;
     }
 	
-    protected LiquidRelayBean(boolean enabled){    	
-    	this.enabled = enabled;
+    protected LiquidRelayBean(){    	
     }	
     
     
 	public void process(Exchange exchange) throws Exception {
-		try{	
-			if(enabled){
-				if(queue.remainingCapacity() <= THRESHOLD){
-					logger.warning("Threashold reached, dumping logging message because volume is to high.");
-				}else{
-					logger.info("Processing exchange.");
-					queue.put(exchange);
-				}					
-			}						    		
+		try{			
+			if(queue.remainingCapacity() <= THRESHOLD){
+				logger.warning("Threashold reached, dumping logging message because volume is to high.");
+			}else{
+				logger.info("Processing exchange.");
+				queue.put(exchange);
+			}														    	
     	} catch (Exception e) {
 			//Empty by design
 		}
 		
-	}
-	
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+	}	
 
 	public LinkedBlockingQueue<Exchange> getQueue() {
 		return queue;
