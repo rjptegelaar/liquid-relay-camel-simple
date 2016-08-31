@@ -27,12 +27,18 @@ public class LiquidServiceImpl implements LiquidService {
     private Transport transport;
 	private Converter<Exchange> converter;
 	private Marshaller marshaller;
+	private String relayDestination, relayStompHostname, relayStompPort;
 	
-	/* (non-Javadoc)
-	 * @see com.pte.liquid.relay.service.LiquidService#start(java.lang.String, java.lang.String, java.lang.String)
-	 */
+	
+	public LiquidServiceImpl(String relayDestination, String relayStompHostname, String relayStompPort){
+		this.relayDestination = relayDestination;
+		this.relayStompHostname = relayStompHostname;
+		this.relayStompPort = relayStompPort;
+		this.start();
+	}
+	
 	@Override
-	public void start(String relayDestination, String relayStompHostname, String relayStompPort){
+	public void start(){
     	logger.info("Starting liquid interceptor.");
     	//Creating marshaller
         marshaller = new JsonMarshaller();
@@ -82,9 +88,6 @@ public class LiquidServiceImpl implements LiquidService {
     	  
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.pte.liquid.relay.service.LiquidService#stop()
-	 */
 	@Override
 	public void stop(){
     	logger.info("Stopping liquid interceptor.");

@@ -1,9 +1,9 @@
 package com.pte.liquid.relay.service;
 
 public interface LiquidService {
+	
+	public void start();
 
-	void start(String relayDestination, String relayStompHostname, String relayStompPort);
-
-	void stop();
+	public void stop();
 
 }
