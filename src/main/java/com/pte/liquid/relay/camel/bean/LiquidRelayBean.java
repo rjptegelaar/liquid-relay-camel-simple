@@ -98,11 +98,9 @@ public class LiquidRelayBean{
 	        	
 	        	   	    	    	    	  	   
 	        	transport.send(preMsg);
-    		}else{
-    			//Empty by design
     		}
     	} catch (Exception e) {
-			//Empty by design
+    		transport.destroy();
 		}
 		
 	}
