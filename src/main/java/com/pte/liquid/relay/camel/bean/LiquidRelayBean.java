@@ -44,7 +44,7 @@ public class LiquidRelayBean{
     	   if(liquidRelayBean == null) {
     		   liquidRelayBean = new LiquidRelayBean(enabled, destination, hostname, port);
     	   }
-    	   logger.info("Created LiquidRelayBean.");
+    	   logger.info("Created LiquidRelayBean, enabled: " + enabled + ", destination: " + destination + ", hostname: " + hostname + ", port: " + port);
     	   return liquidRelayBean;
     	}
 	
@@ -77,7 +77,7 @@ public class LiquidRelayBean{
     		if(enabled){
     			    	
     			count++;
-    			if((count%5)==0){
+    			if((count%1000)==0){
     				logger.info("Sent " + count + " messages");
     			}
     			

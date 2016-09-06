@@ -45,7 +45,7 @@ public class LiquidRelayProcessor implements Processor{
     	   if(liquidRelayProcessor == null) {
     		   liquidRelayProcessor = new LiquidRelayProcessor(enabled, destination, hostname, port);
     	   }
-    	   logger.info("Created LiquidRelayProcessor.");
+    	   logger.info("Created LiquidRelayProcessor, enabled: " + enabled + ", destination: " + destination + ", hostname: " + hostname + ", port: " + port);
     	   return liquidRelayProcessor;
     	}
 	
@@ -72,18 +72,14 @@ public class LiquidRelayProcessor implements Processor{
     	converter = new LiquidRelayExchangeConverterImpl();
     	
     }
-    
-    
-	/* (non-Javadoc)
-	 * @see com.pte.liquid.relay.camel.processor.LiquidRelayProcessor#process(org.apache.camel.Exchange)
-	 */
+   
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		try{
     		if(enabled){
     			    
     			count++;
-    			if((count%5)==0){
+    			if((count%1000)==0){
     				logger.info("Sent " + count + " messages");
     			}
     			
