@@ -11,12 +11,14 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-package com.pte.liquid.relay.camel.bean;
+package com.pte.liquid.relay.camel.processor;
 
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Marshaller;
@@ -27,9 +29,8 @@ import com.pte.liquid.relay.client.stomp.StompTransport;
 import com.pte.liquid.relay.marshaller.json.JsonMarshaller;
 import com.pte.liquid.relay.model.Message;
 
-public class LiquidRelayBean{
-	
-	private static final transient Logger logger = Logger.getLogger("LiquidRelayBean");
+public class LiquidRelayProcessor implements Processor{
+	private static final transient Logger logger = Logger.getLogger("LiquidRelayProcessor");
 	private long count = 0;
 	
     private Transport transport;
@@ -38,17 +39,17 @@ public class LiquidRelayBean{
 		
     private boolean enabled;
 
-    private static LiquidRelayBean liquidRelayBean = null;
+    private static LiquidRelayProcessor liquidRelayProcessor = null;
     
-    public synchronized static LiquidRelayBean getInstance(boolean enabled, String destination, String hostname, int port) {
-    	   if(liquidRelayBean == null) {
-    		   liquidRelayBean = new LiquidRelayBean(enabled, destination, hostname, port);
+    public synchronized static LiquidRelayProcessor getInstance(boolean enabled, String destination, String hostname, int port) {
+    	   if(liquidRelayProcessor == null) {
+    		   liquidRelayProcessor = new LiquidRelayProcessor(enabled, destination, hostname, port);
     	   }
-    	   logger.info("Created LiquidRelayBean.");
-    	   return liquidRelayBean;
+    	   logger.info("Created LiquidRelayProcessor.");
+    	   return liquidRelayProcessor;
     	}
 	
-    protected LiquidRelayBean(boolean enabled, String destination, String hostname, int port){    	
+    protected LiquidRelayProcessor(boolean enabled, String destination, String hostname, int port){    	
     	this.enabled = enabled;
     	
     	marshaller = new JsonMarshaller();
@@ -72,10 +73,15 @@ public class LiquidRelayBean{
     	
     }
     
+    
+	/* (non-Javadoc)
+	 * @see com.pte.liquid.relay.camel.processor.LiquidRelayProcessor#process(org.apache.camel.Exchange)
+	 */
+	@Override
 	public void process(Exchange exchange) throws Exception {
 		try{
     		if(enabled){
-    			    	
+    			    
     			count++;
     			if((count%5)==0){
     				logger.info("Sent " + count + " messages");
@@ -99,7 +105,9 @@ public class LiquidRelayBean{
 	        	   	    	    	    	  	   
 	        	transport.send(preMsg);
     		}else{
-    			//Empty by design
+    			if(logger.isLoggable(Level.FINEST)){
+    				logger.finest("Skipping message because liquid is disabled");
+    			}
     		}
     	} catch (Exception e) {
 			//Empty by design
@@ -110,8 +118,6 @@ public class LiquidRelayBean{
 	public long getCount() {
 		return count;
 	}
-	
-	
 
 
 }
