@@ -100,7 +100,9 @@ public class LiquidRelayBean{
 	        	transport.send(preMsg);
     		}
     	} catch (Exception e) {
+    		
     		transport.destroy();
+    		logger.info("Recreating transport because of exception: " + e.getMessage());
 		}
 		
 	}
