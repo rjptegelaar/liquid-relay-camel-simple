@@ -65,7 +65,7 @@
 		<dependency>
 		  <groupId>com.pte.liquid.relay</groupId>
 		  <artifactId>liquid-relay-camel-converter</artifactId>
-		  <version>1.0.0</version>
+		  <version>1.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
