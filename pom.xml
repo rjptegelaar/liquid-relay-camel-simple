@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>liquid-relay-camel-simple</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
-  <name>liquid-relay-camel-simple</name>
-<url>http://www.paultegelaar.nl</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>liquid-relay-camel-simple</artifactId>
+	<version>1.0.3-SNAPSHOT</version>
+	<name>liquid-relay-camel-simple</name>
+	<url>http://www.paultegelaar.nl</url>
 	<parent>
 		<groupId>com.pte.liquid.relay</groupId>
 		<artifactId>liquid-parent</artifactId>
@@ -44,28 +45,32 @@
 						<version>2.14.1</version>
 					</dependency>
 				</dependencies>
-			</plugin>				
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
-	<!-- CAMEL -->
+		<!-- CAMEL -->
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<!-- LIQUID -->
-
 		<dependency>
 			<groupId>com.pte.liquid.relay</groupId>
 			<artifactId>RelayApi</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.pte.liquid.relay</groupId>
-		  <artifactId>liquid-relay-camel-converter</artifactId>
-		  <version>1.0.1</version>
+			<groupId>com.pte.liquid.relay</groupId>
+			<artifactId>liquid-relay-camel-converter</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pte.liquid.relay</groupId>
+			<artifactId>liquid-legacy-async</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

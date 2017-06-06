@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 import org.apache.camel.Exchange;
 
+import com.pte.liquid.async.LiquidLegacyTransport;
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Marshaller;
 import com.pte.liquid.relay.Transport;
@@ -27,12 +28,15 @@ import com.pte.liquid.relay.client.stomp.StompTransport;
 import com.pte.liquid.relay.marshaller.json.JsonMarshaller;
 import com.pte.liquid.relay.model.Message;
 
+
+
 public class LiquidRelayBean{
 	
 	private static final transient Logger logger = Logger.getLogger("LiquidRelayBean");
 	private long count = 0;
 	
-    private Transport transport;
+    private Transport stompTransport;
+    private Transport asyncTransport;
 	private Converter<Exchange> converter;
 	private Marshaller marshaller;
 		
@@ -43,9 +47,13 @@ public class LiquidRelayBean{
     public synchronized static LiquidRelayBean getInstance(boolean enabled, String destination, String hostname, int port) {
     	   if(liquidRelayBean == null) {
     		   liquidRelayBean = new LiquidRelayBean(enabled, destination, hostname, port);
+    		   logger.info("Created LiquidRelayBean, enabled: " + enabled + ", destination: " + destination + ", hostname: " + hostname + ", port: " + port);
     	   }
-    	   logger.info("Created LiquidRelayBean, enabled: " + enabled + ", destination: " + destination + ", hostname: " + hostname + ", port: " + port);
+    	   
+    	   
+    	   
     	   return liquidRelayBean;
+    	  
     	}
 	
     protected LiquidRelayBean(boolean enabled, String destination, String hostname, int port){    	
@@ -64,12 +72,14 @@ public class LiquidRelayBean{
         if(port>0){
         	properties.put("relay_stomp_port", port);
         }
+    
+    	stompTransport = new StompTransport();
+    	stompTransport.setProperties(properties);
+    	stompTransport.setMarshaller(marshaller);
     	
-    	transport = new StompTransport();
-    	transport.setProperties(properties);
-    	transport.setMarshaller(marshaller);
+    	asyncTransport = new LiquidLegacyTransport(stompTransport);
+    	
     	converter = new LiquidRelayExchangeConverterImpl();
-    	
     }
     
 	public void process(Exchange exchange) throws Exception {
@@ -97,11 +107,11 @@ public class LiquidRelayBean{
 	        	preMsg.setOrder(order);	
 	        	
 	        	   	    	    	    	  	   
-	        	transport.send(preMsg);
+	        	asyncTransport.send(preMsg);
     		}
     	} catch (Exception e) {
     		
-    		transport.destroy();
+    		stompTransport.destroy();
     		logger.info("Recreating transport because of exception: " + e.getMessage());
 		}
 		
@@ -110,8 +120,7 @@ public class LiquidRelayBean{
 	public long getCount() {
 		return count;
 	}
-	
-	
+
 
 
 }

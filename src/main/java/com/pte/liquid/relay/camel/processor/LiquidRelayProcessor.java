@@ -34,6 +34,8 @@ public class LiquidRelayProcessor implements Processor{
 	private long count = 0;
 	
     private Transport transport;
+    private Transport asyncTransport;
+        
 	private Converter<Exchange> converter;
 	private Marshaller marshaller;
 		
@@ -44,8 +46,9 @@ public class LiquidRelayProcessor implements Processor{
     public synchronized static LiquidRelayProcessor getInstance(boolean enabled, String destination, String hostname, int port) {
     	   if(liquidRelayProcessor == null) {
     		   liquidRelayProcessor = new LiquidRelayProcessor(enabled, destination, hostname, port);
+    		   logger.info("Created LiquidRelayProcessor, enabled: " + enabled + ", destination: " + destination + ", hostname: " + hostname + ", port: " + port);
     	   }
-    	   logger.info("Created LiquidRelayProcessor, enabled: " + enabled + ", destination: " + destination + ", hostname: " + hostname + ", port: " + port);
+    	   
     	   return liquidRelayProcessor;
     	}
 	
@@ -114,6 +117,7 @@ public class LiquidRelayProcessor implements Processor{
 	public long getCount() {
 		return count;
 	}
+
 
 
 }
