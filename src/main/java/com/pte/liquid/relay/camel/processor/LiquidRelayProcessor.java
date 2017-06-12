@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
+import com.pte.liquid.async.LiquidLegacyTransport;
 import com.pte.liquid.relay.Converter;
 import com.pte.liquid.relay.Marshaller;
 import com.pte.liquid.relay.Transport;
@@ -33,7 +34,7 @@ public class LiquidRelayProcessor implements Processor{
 	private static final transient Logger logger = Logger.getLogger("LiquidRelayProcessor");
 	private long count = 0;
 	
-    private Transport transport;
+    private Transport stompTransport;
     private Transport asyncTransport;
         
 	private Converter<Exchange> converter;
@@ -69,9 +70,11 @@ public class LiquidRelayProcessor implements Processor{
         	properties.put("relay_stomp_port", port);
         }
     	
-    	transport = new StompTransport();
-    	transport.setProperties(properties);
-    	transport.setMarshaller(marshaller);
+    	stompTransport = new StompTransport();
+    	stompTransport.setProperties(properties);
+    	stompTransport.setMarshaller(marshaller);
+    	
+    	asyncTransport = new LiquidLegacyTransport(stompTransport);
     	converter = new LiquidRelayExchangeConverterImpl();
     	
     }
@@ -102,7 +105,7 @@ public class LiquidRelayProcessor implements Processor{
 	        	preMsg.setOrder(order);	
 	        	
 	        	   	    	    	    	  	   
-	        	transport.send(preMsg);
+	        	asyncTransport.send(preMsg);
     		}else{
     			if(logger.isLoggable(Level.FINEST)){
     				logger.finest("Skipping message because liquid is disabled");
