@@ -57,7 +57,7 @@
 		</dependency>
 		<!-- LIQUID -->
 		<dependency>
-			<groupId>com.pte.liquid.relay</groupId>
+			<groupId>nl.paultegelaar.liquid.relay</groupId>
 			<artifactId>RelayApi</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
